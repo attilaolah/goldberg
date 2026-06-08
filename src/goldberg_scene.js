@@ -1,3 +1,5 @@
+const PENTAGON_BACKGROUND_OFFSET = 0.006;
+
 (function renderGoldbergScene() {
   const canvas = document.getElementById("render_canvas");
   const engine = new BABYLON.Engine(canvas, true);
@@ -260,8 +262,8 @@ function createFaceLabels(scene, patches, positions, parent) {
 }
 
 function createPentagonBackground(scene, patch, positions, normal, material, parent) {
-  const center = patch.labelCenter.add(normal.scale(0.02));
-  const vertices = patch.rings.A.map((vertex) => positions[vertex].add(normal.scale(0.02)));
+  const center = patch.labelCenter.add(normal.scale(PENTAGON_BACKGROUND_OFFSET));
+  const vertices = patch.rings.A.map((vertex) => positions[vertex].add(normal.scale(PENTAGON_BACKGROUND_OFFSET)));
   const meshPositions = center.asArray().concat(vertices.flatMap((vertex) => vertex.asArray()));
   const indices = [];
 
