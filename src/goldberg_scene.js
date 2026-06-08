@@ -38,9 +38,11 @@
   const faceData = buildFaceData(goldberg, graph);
   const patches = mapPatches(faceData, graph);
   const vertexLabels = buildVertexLabels(patches, graph);
+  const globeRoot = createGlobeRoot(scene, patches);
 
-  createFaceLabels(scene, patches, graph.positions);
-  createVertexLabels(scene, vertexLabels, graph.positions);
+  goldberg.parent = globeRoot;
+  createFaceLabels(scene, patches, graph.positions, globeRoot);
+  createVertexLabels(scene, vertexLabels, graph.positions, globeRoot);
 
   engine.runRenderLoop(() => {
     scene.render();
@@ -132,7 +134,8 @@ function buildFaceData(goldberg, graph) {
 function mapPatches(pentagons, graph) {
   const { adjacency, positions } = graph;
   const north = pentagons.reduce((best, current) => (current.center.y > best.center.y ? current : best));
-  const south = pentagons.reduce((best, current) => (current.center.y < best.center.y ? current : best));
+  const northDirection = north.center.clone().normalize();
+  const south = pentagons.reduce((best, current) => (BABYLON.Vector3.Dot(current.center.clone().normalize(), northDirection) < BABYLON.Vector3.Dot(best.center.clone().normalize(), northDirection) ? current : best));
   const middle = pentagons.filter((patch) => patch.faceIndex !== north.faceIndex && patch.faceIndex !== south.faceIndex);
 
   const northNeighbors = sortByDistance(middle, north.center).slice(0, 5);
@@ -204,7 +207,14 @@ function buildVertexLabels(patches, graph) {
   return labelByVertex;
 }
 
-function createFaceLabels(scene, patches, positions) {
+function createGlobeRoot(scene, patches) {
+  const northPatch = patches.find((patch) => patch.name === "N");
+  const root = new BABYLON.TransformNode("globe_root", scene);
+  root.rotationQuaternion = rotationBetweenDirections(northPatch.center, BABYLON.Axis.Y);
+  return root;
+}
+
+function createFaceLabels(scene, patches, positions, parent) {
   const backgroundMaterial = new BABYLON.StandardMaterial("pentagon_label_background", scene);
   backgroundMaterial.diffuseColor = BABYLON.Color3.FromHexString("#ff8c00");
   backgroundMaterial.emissiveColor = BABYLON.Color3.FromHexString("#ff8c00");
@@ -214,13 +224,13 @@ function createFaceLabels(scene, patches, positions) {
 
   for (const patch of patches) {
     const normal = patch.labelCenter.clone().normalize();
-    createPentagonBackground(scene, patch, positions, normal, backgroundMaterial);
-    createFaceTextPlane(scene, patch.name, patch.labelCenter.add(normal.scale(0.04)), normal, patch.anchor, 1.23, "bold 150px monospace", true);
-    createFaceTextPlane(scene, `${patch.name}_inside`, patch.labelCenter.subtract(normal.scale(0.04)), normal.scale(-1), patch.anchor, 1.23, "bold 150px monospace", true, patch.name);
+    createPentagonBackground(scene, patch, positions, normal, backgroundMaterial, parent);
+    createFaceTextPlane(scene, patch.name, patch.labelCenter.add(normal.scale(0.04)), normal, patch.anchor, 1.23, "bold 150px monospace", true, parent);
+    createFaceTextPlane(scene, `${patch.name}_inside`, patch.labelCenter.subtract(normal.scale(0.04)), normal.scale(-1), patch.anchor, 1.23, "bold 150px monospace", true, parent, patch.name);
   }
 }
 
-function createPentagonBackground(scene, patch, positions, normal, material) {
+function createPentagonBackground(scene, patch, positions, normal, material, parent) {
   const center = patch.labelCenter.add(normal.scale(0.02));
   const vertices = patch.rings.A.map((vertex) => positions[vertex].add(normal.scale(0.02)));
   const meshPositions = center.asArray().concat(vertices.flatMap((vertex) => vertex.asArray()));
@@ -235,35 +245,36 @@ function createPentagonBackground(scene, patch, positions, normal, material) {
   vertexData.positions = meshPositions;
   vertexData.indices = indices;
   vertexData.applyToMesh(mesh);
+  mesh.parent = parent;
   mesh.isPickable = false;
   mesh.material = material;
 }
 
-function createVertexLabels(scene, labelsByVertex, positions) {
+function createVertexLabels(scene, labelsByVertex, positions, parent) {
   labelsByVertex.forEach((label, vertexIndex) => {
     const basePosition = positions[vertexIndex];
     const labelPosition = basePosition
       .clone()
       .normalize()
       .scale(basePosition.length() + 0.28);
-    createTextPlane(scene, label, labelPosition, 0.27, "bold 78px monospace");
+    createTextPlane(scene, label, labelPosition, 0.27, "bold 78px monospace", parent);
   });
 }
 
-function createTextPlane(scene, text, position, size, font) {
-  const plane = createLabelPlane(scene, text, position, size, font);
+function createTextPlane(scene, text, position, size, font, parent) {
+  const plane = createLabelPlane(scene, text, position, size, font, false, parent);
   plane.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
 }
 
-function createFaceTextPlane(scene, name, position, normal, anchor, size, font, backFaceCulling = false, text = name) {
-  const plane = createLabelPlane(scene, name, position, size, font, backFaceCulling, text);
+function createFaceTextPlane(scene, name, position, normal, anchor, size, font, backFaceCulling = false, parent, text = name) {
+  const plane = createLabelPlane(scene, name, position, size, font, backFaceCulling, parent, text);
   const zAxis = normal.scale(-1);
   const yAxis = tangentDirection(normal, anchor).normalize();
   const xAxis = BABYLON.Vector3.Cross(yAxis, zAxis).normalize();
   plane.rotation = BABYLON.Vector3.RotationFromAxis(xAxis, yAxis, zAxis);
 }
 
-function createLabelPlane(scene, name, position, size, font, backFaceCulling = false, text = name) {
+function createLabelPlane(scene, name, position, size, font, backFaceCulling = false, parent, text = name) {
   const textureSize = 512;
   const texture = new BABYLON.DynamicTexture(`label_texture_${name}`, { height: textureSize, width: textureSize }, scene, true);
   texture.hasAlpha = true;
@@ -278,6 +289,7 @@ function createLabelPlane(scene, name, position, size, font, backFaceCulling = f
   material.zOffset = -2;
 
   const plane = BABYLON.MeshBuilder.CreatePlane(`label_${name}`, { size }, scene);
+  plane.parent = parent;
   plane.isPickable = false;
   plane.material = material;
   plane.position = position;
@@ -286,6 +298,23 @@ function createLabelPlane(scene, name, position, size, font, backFaceCulling = f
 
 function averagePositions(vertices, positions) {
   return vertices.reduce((sum, vertex) => sum.add(positions[vertex]), BABYLON.Vector3.Zero()).scale(1 / vertices.length);
+}
+
+function rotationBetweenDirections(from, to) {
+  const start = from.clone().normalize();
+  const end = to.clone().normalize();
+  const dot = BABYLON.Vector3.Dot(start, end);
+
+  if (dot > 0.999999) {
+    return BABYLON.Quaternion.Identity();
+  }
+
+  if (dot < -0.999999) {
+    const fallback = Math.abs(start.x) < 0.9 ? BABYLON.Axis.X : BABYLON.Axis.Z;
+    return BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Cross(start, fallback).normalize(), Math.PI);
+  }
+
+  return BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Cross(start, end).normalize(), Math.acos(dot));
 }
 
 function getAnchorVector(patchName, patchByName) {
