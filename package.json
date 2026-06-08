@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "bun --watch src/server.js"
+    "serve": "concurrently -k -n server,browser -c cyan,yellow \"bun run serve:server\" \"bun run serve:browser\"",
+    "serve:server": "bun --watch src/server.js",
+    "serve:browser": "browser-sync start --port 2250 --proxy http://127.0.0.1:5297 --files \"src/**/*.html,src/**/*.js\" --no-open --no-notify"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "concurrently": "^10.0.3"
   }
 }
