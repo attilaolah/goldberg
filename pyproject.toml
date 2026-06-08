@@ -1,0 +1,19 @@
+[project]
+name = "goldberg-optimisation"
+version = "0.1.0"
+description = "Numerical optimisation tools for Goldberg GP(2,2)."
+requires-python = ">=3.11"
+dependencies = [
+  "networkx>=3.5",
+  "numpy>=2.3",
+  "scipy>=1.16",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

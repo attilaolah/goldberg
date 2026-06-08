@@ -1,0 +1,78 @@
+{
+  "name": "Goldberg GP(2,2) optimisation report",
+  "vertex_count": 240,
+  "edge_count": 360,
+  "face_count": 122,
+  "edge_length": 0.2016604443550709,
+  "target_tolerance": 1e-10,
+  "satisfies_target": false,
+  "metrics": {
+    "on_sphere": 2.220446049250313e-16,
+    "equilateral": 0.001528117270986895,
+    "planar": 0.0030077599109303087,
+    "shortest_edge": 0.2008537620797569,
+    "longest_edge": 0.20238187935074378
+  },
+  "stages": [
+    {
+      "stage": "sphere_and_edges",
+      "success": true,
+      "status": 3,
+      "cost": 2.166664416636328e-22,
+      "optimality": 6.433301599409099e-12,
+      "evaluations": 40,
+      "metrics": {
+        "on_sphere": 2.220446049250313e-16,
+        "equilateral": 4.604927550388993e-13,
+        "planar": 0.003264332633594455,
+        "shortest_edge": 0.20174534900612928,
+        "longest_edge": 0.20174534900658977
+      }
+    },
+    {
+      "stage": "add_planarity",
+      "success": true,
+      "status": 3,
+      "cost": 0.001637966660778303,
+      "optimality": 1.0732569563978722e-10,
+      "evaluations": 36,
+      "metrics": {
+        "on_sphere": 2.220446049250313e-16,
+        "equilateral": 1.8953154635070746e-5,
+        "planar": 0.003162319401011359,
+        "shortest_edge": 0.20173302717265967,
+        "longest_edge": 0.20175198032729474
+      }
+    },
+    {
+      "stage": "tighten_planarity",
+      "success": true,
+      "status": 3,
+      "cost": 0.16270189595418993,
+      "optimality": 8.664909068034632e-8,
+      "evaluations": 35,
+      "metrics": {
+        "on_sphere": 2.220446049250313e-16,
+        "equilateral": 7.504667653354669e-5,
+        "planar": 0.003156710854492104,
+        "shortest_edge": 0.20170066548438256,
+        "longest_edge": 0.2017757121609161
+      }
+    },
+    {
+      "stage": "final_polish",
+      "success": true,
+      "status": 3,
+      "cost": 13.595788371246323,
+      "optimality": 1.334022248222766e-6,
+      "evaluations": 35,
+      "metrics": {
+        "on_sphere": 2.220446049250313e-16,
+        "equilateral": 0.001528117270986895,
+        "planar": 0.0030077599109303087,
+        "shortest_edge": 0.2008537620797569,
+        "longest_edge": 0.20238187935074378
+      }
+    }
+  ]
+}
