@@ -430,7 +430,7 @@ function buildCRing(aRing, bRing, adjacency, patchCenter, anchor, positions) {
     cRing.push(ordered[0], ordered[1]);
   }
 
-  return cRing;
+  return rotateArray(cRing, 1);
 }
 
 function orderRing(vertices, patchCenter, anchor, positions) {
