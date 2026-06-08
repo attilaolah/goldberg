@@ -8,6 +8,7 @@ body {
 #render_canvas {
   display: block;
   height: 100%;
+  outline: none;
   touch-action: none;
   width: 100%;
 }

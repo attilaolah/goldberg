@@ -257,7 +257,7 @@ function createVertexLabels(scene, labelsByVertex, positions, parent) {
       .clone()
       .normalize()
       .scale(basePosition.length() + 0.28);
-    createTextPlane(scene, label, labelPosition, 0.27, "bold 78px monospace", parent);
+    createTextPlane(scene, label, labelPosition, 0.54, "bold 78px monospace", parent);
   });
 }
 
