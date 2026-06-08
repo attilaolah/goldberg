@@ -1,4 +1,5 @@
 const PENTAGON_BACKGROUND_OFFSET = 0.006;
+const VERTEX_LABEL_OFFSET = 0.16;
 
 (function renderGoldbergScene() {
   const canvas = document.getElementById("render_canvas");
@@ -288,7 +289,7 @@ function createVertexLabels(scene, labelsByVertex, positions, parent) {
     const labelPosition = basePosition
       .clone()
       .normalize()
-      .scale(basePosition.length() + 0.28);
+      .scale(basePosition.length() + VERTEX_LABEL_OFFSET);
     createTextPlane(scene, label, BABYLON.Vector3.TransformCoordinates(labelPosition, parentTransform), 0.54, "bold 78px monospace");
   });
 }
