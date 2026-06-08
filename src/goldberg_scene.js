@@ -356,12 +356,10 @@ function getAnchorVector(patchName, patchByName) {
   const southCenter = patchByName.get("S").center;
 
   if (patchName === "N") {
-    const edgeMidpoint = patchByName.get("N1").center.add(patchByName.get("N5").center).scale(0.5);
-    return tangentDirection(patchCenter, edgeMidpoint.subtract(patchCenter));
+    return tangentDirection(patchCenter, patchByName.get("N1").center.subtract(patchCenter));
   }
   if (patchName === "S") {
-    const edgeMidpoint = patchByName.get("S1").center.add(patchByName.get("S5").center).scale(0.5);
-    return tangentDirection(patchCenter, edgeMidpoint.subtract(patchCenter));
+    return tangentDirection(patchCenter, patchByName.get("S1").center.subtract(patchCenter));
   }
   if (patchName.startsWith("N")) {
     return tangentDirection(patchCenter, northCenter.subtract(patchCenter));
@@ -455,7 +453,7 @@ function orderRing(vertices, patchCenter, anchor, positions) {
 function buildBasis(patchCenter, anchor) {
   const normal = patchCenter.normalize();
   const x = tangentDirection(patchCenter, anchor);
-  const y = BABYLON.Vector3.Cross(normal, x).normalize();
+  const y = BABYLON.Vector3.Cross(x, normal).normalize();
   return { normal, x, y };
 }
 
