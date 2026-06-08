@@ -8,3 +8,4 @@
 
 - Git commits should use Conventional Commit messages (for example, `feat: ...`, `fix: ...`, `docs: ...`).
 - Prefer `snake_case` names for files.
+- Keep code/content in files with matching extensions whenever practical (for example, HTML in `.html` files instead of embedded strings in `.js` files) so linters and security scanners can inspect the correct artifact type.
