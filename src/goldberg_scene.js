@@ -102,20 +102,28 @@ function buildFaceData(goldberg, graph) {
       .scale(1 / 3);
     const faceIndex = findClosestFace(centroid, faceCenters);
     if (!grouped.has(faceIndex)) {
-      grouped.set(faceIndex, new Set());
+      grouped.set(faceIndex, {
+        edgeCounts: new Map(),
+        vertices: new Set(),
+      });
     }
-    const vertices = grouped.get(faceIndex);
-    vertices.add(triangle[0]);
-    vertices.add(triangle[1]);
-    vertices.add(triangle[2]);
+    const face = grouped.get(faceIndex);
+    face.vertices.add(triangle[0]);
+    face.vertices.add(triangle[1]);
+    face.vertices.add(triangle[2]);
+    countEdge(face.edgeCounts, triangle[0], triangle[1]);
+    countEdge(face.edgeCounts, triangle[1], triangle[2]);
+    countEdge(face.edgeCounts, triangle[2], triangle[0]);
   }
 
+  graph.adjacency = buildPolygonAdjacency(grouped, graph.positions.length);
+
   const pentagons = [];
-  grouped.forEach((vertexSet, faceIndex) => {
-    if (vertexSet.size !== 5) {
+  grouped.forEach((face, faceIndex) => {
+    if (face.vertices.size !== 5) {
       return;
     }
-    const vertices = [...vertexSet];
+    const vertices = [...face.vertices];
     pentagons.push({
       faceIndex,
       center: faceCenters[faceIndex].clone(),
@@ -129,6 +137,27 @@ function buildFaceData(goldberg, graph) {
   }
 
   return pentagons;
+}
+
+function buildPolygonAdjacency(groupedFaces, vertexCount) {
+  const adjacency = Array.from({ length: vertexCount }, () => new Set());
+
+  groupedFaces.forEach((face) => {
+    for (const [edgeKey, count] of face.edgeCounts) {
+      if (count !== 1) {
+        continue;
+      }
+      const [left, right] = edgeKey.split(":").map(Number);
+      link(adjacency, left, right);
+    }
+  });
+
+  return adjacency;
+}
+
+function countEdge(edgeCounts, left, right) {
+  const edgeKey = left < right ? `${left}:${right}` : `${right}:${left}`;
+  edgeCounts.set(edgeKey, (edgeCounts.get(edgeKey) || 0) + 1);
 }
 
 function mapPatches(pentagons, graph) {
