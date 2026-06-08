@@ -280,13 +280,14 @@ function createPentagonBackground(scene, patch, positions, normal, material, par
 }
 
 function createVertexLabels(scene, labelsByVertex, positions, parent) {
+  const parentTransform = parent.getWorldMatrix();
   labelsByVertex.forEach((label, vertexIndex) => {
     const basePosition = positions[vertexIndex];
     const labelPosition = basePosition
       .clone()
       .normalize()
       .scale(basePosition.length() + 0.28);
-    createTextPlane(scene, label, labelPosition, 0.54, "bold 78px monospace", parent);
+    createTextPlane(scene, label, BABYLON.Vector3.TransformCoordinates(labelPosition, parentTransform), 0.54, "bold 78px monospace");
   });
 }
 

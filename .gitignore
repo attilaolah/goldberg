@@ -231,6 +231,7 @@ pnpm-debug.log*
 .yarn/build-state.yml
 .yarn/install-state.gz
 .parcel-cache/
+.playwright-mcp/
 .next/
 .nuxt/
 .svelte-kit/
