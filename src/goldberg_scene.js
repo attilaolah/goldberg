@@ -9,6 +9,7 @@
   camera.attachControl(canvas, true);
   camera.lowerRadiusLimit = 7;
   camera.upperRadiusLimit = 30;
+  camera.panningSensibility = 0;
   camera.wheelDeltaPercentage = 0.01;
 
   const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
@@ -27,7 +28,7 @@
   const surfaceMaterial = new BABYLON.StandardMaterial("surface", scene);
   surfaceMaterial.diffuseColor = new BABYLON.Color3(0.15, 0.55, 0.9);
   surfaceMaterial.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
-  surfaceMaterial.alpha = 0.55;
+  surfaceMaterial.alpha = 0.8;
   goldberg.material = surfaceMaterial;
   goldberg.enableEdgesRendering();
   goldberg.edgesWidth = 1.8;
@@ -38,7 +39,7 @@
   const patches = mapPatches(faceData, graph);
   const vertexLabels = buildVertexLabels(patches, graph);
 
-  createFaceLabels(scene, patches);
+  createFaceLabels(scene, patches, graph.positions);
   createVertexLabels(scene, vertexLabels, graph.positions);
 
   engine.runRenderLoop(() => {
@@ -112,10 +113,12 @@ function buildFaceData(goldberg, graph) {
     if (vertexSet.size !== 5) {
       return;
     }
+    const vertices = [...vertexSet];
     pentagons.push({
       faceIndex,
       center: faceCenters[faceIndex].clone(),
-      vertices: [...vertexSet],
+      labelCenter: averagePositions(vertices, graph.positions),
+      vertices,
     });
   });
 
@@ -163,6 +166,7 @@ function mapPatches(pentagons, graph) {
     namedPatches.push({
       anchor,
       center: patch.center.clone(),
+      labelCenter: patch.labelCenter.clone(),
       name: patchName,
       rings: { A: aRing, B: bRing, C: cRing },
     });
@@ -200,36 +204,88 @@ function buildVertexLabels(patches, graph) {
   return labelByVertex;
 }
 
-function createFaceLabels(scene, patches) {
+function createFaceLabels(scene, patches, positions) {
+  const backgroundMaterial = new BABYLON.StandardMaterial("pentagon_label_background", scene);
+  backgroundMaterial.diffuseColor = BABYLON.Color3.FromHexString("#ff8c00");
+  backgroundMaterial.emissiveColor = BABYLON.Color3.FromHexString("#ff8c00");
+  backgroundMaterial.disableLighting = true;
+  backgroundMaterial.backFaceCulling = false;
+  backgroundMaterial.zOffset = -4;
+
   for (const patch of patches) {
-    const labelPosition = patch.center.normalize().scale(5.2);
-    createTextPlane(scene, patch.name, labelPosition, 0.92, "bold 150px monospace");
+    const normal = patch.labelCenter.clone().normalize();
+    createPentagonBackground(scene, patch, positions, normal, backgroundMaterial);
+    createFaceTextPlane(scene, patch.name, patch.labelCenter.add(normal.scale(0.04)), normal, patch.anchor, 1.23, "bold 150px monospace", true);
+    createFaceTextPlane(scene, `${patch.name}_inside`, patch.labelCenter.subtract(normal.scale(0.04)), normal.scale(-1), patch.anchor, 1.23, "bold 150px monospace", true, patch.name);
   }
+}
+
+function createPentagonBackground(scene, patch, positions, normal, material) {
+  const center = patch.labelCenter.add(normal.scale(0.02));
+  const vertices = patch.rings.A.map((vertex) => positions[vertex].add(normal.scale(0.02)));
+  const meshPositions = center.asArray().concat(vertices.flatMap((vertex) => vertex.asArray()));
+  const indices = [];
+
+  for (let index = 0; index < vertices.length; index += 1) {
+    indices.push(0, index + 1, ((index + 1) % vertices.length) + 1);
+  }
+
+  const mesh = new BABYLON.Mesh(`pentagon_background_${patch.name}`, scene);
+  const vertexData = new BABYLON.VertexData();
+  vertexData.positions = meshPositions;
+  vertexData.indices = indices;
+  vertexData.applyToMesh(mesh);
+  mesh.isPickable = false;
+  mesh.material = material;
 }
 
 function createVertexLabels(scene, labelsByVertex, positions) {
   labelsByVertex.forEach((label, vertexIndex) => {
     const basePosition = positions[vertexIndex];
-    const labelPosition = basePosition.normalize().scale(basePosition.length() + 0.28);
+    const labelPosition = basePosition
+      .clone()
+      .normalize()
+      .scale(basePosition.length() + 0.28);
     createTextPlane(scene, label, labelPosition, 0.27, "bold 78px monospace");
   });
 }
 
 function createTextPlane(scene, text, position, size, font) {
-  const texture = new BABYLON.DynamicTexture(`label_texture_${text}`, { height: 256, width: 1024 }, scene, true);
-  texture.hasAlpha = true;
-  texture.drawText(text, null, 170, font, "#ffffff", "transparent", true, true);
+  const plane = createLabelPlane(scene, text, position, size, font);
+  plane.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+}
 
-  const material = new BABYLON.StandardMaterial(`label_material_${text}`, scene);
+function createFaceTextPlane(scene, name, position, normal, anchor, size, font, backFaceCulling = false, text = name) {
+  const plane = createLabelPlane(scene, name, position, size, font, backFaceCulling, text);
+  const zAxis = normal.scale(-1);
+  const yAxis = tangentDirection(normal, anchor).normalize();
+  const xAxis = BABYLON.Vector3.Cross(yAxis, zAxis).normalize();
+  plane.rotation = BABYLON.Vector3.RotationFromAxis(xAxis, yAxis, zAxis);
+}
+
+function createLabelPlane(scene, name, position, size, font, backFaceCulling = false, text = name) {
+  const textureSize = 512;
+  const texture = new BABYLON.DynamicTexture(`label_texture_${name}`, { height: textureSize, width: textureSize }, scene, true);
+  texture.hasAlpha = true;
+  texture.drawText(text, null, textureSize * 0.62, font, "#ffffff", "transparent", true, true);
+
+  const material = new BABYLON.StandardMaterial(`label_material_${name}`, scene);
   material.diffuseTexture = texture;
   material.emissiveColor = BABYLON.Color3.White();
   material.disableLighting = true;
   material.opacityTexture = texture;
+  material.backFaceCulling = backFaceCulling;
+  material.zOffset = -2;
 
-  const plane = BABYLON.MeshBuilder.CreatePlane(`label_${text}`, { size }, scene);
-  plane.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+  const plane = BABYLON.MeshBuilder.CreatePlane(`label_${name}`, { size }, scene);
+  plane.isPickable = false;
   plane.material = material;
   plane.position = position;
+  return plane;
+}
+
+function averagePositions(vertices, positions) {
+  return vertices.reduce((sum, vertex) => sum.add(positions[vertex]), BABYLON.Vector3.Zero()).scale(1 / vertices.length);
 }
 
 function getAnchorVector(patchName, patchByName) {
