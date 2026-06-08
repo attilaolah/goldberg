@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+#render_canvas {
+  display: block;
+  height: 100%;
+  touch-action: none;
+  width: 100%;
+}
