@@ -1,0 +1,728 @@
+{
+  "name": "Goldberg GP(2,2) vertex connections",
+  "notation": "[Patch][Ring][Index], for example NA1 or S3C5",
+  "vertex_count": 240,
+  "neighbour_count_per_vertex": 3,
+  "vertices": {
+    "NA1": {
+      "neighbours": ["NA2", "NA5", "NB1"]
+    },
+    "NA2": {
+      "neighbours": ["NA1", "NA3", "NB2"]
+    },
+    "NA3": {
+      "neighbours": ["NA2", "NA4", "NB3"]
+    },
+    "NA4": {
+      "neighbours": ["NA3", "NA5", "NB4"]
+    },
+    "NA5": {
+      "neighbours": ["NA1", "NA4", "NB5"]
+    },
+    "NB1": {
+      "neighbours": ["NA1", "NC1", "NC10"]
+    },
+    "NB2": {
+      "neighbours": ["NA2", "NC2", "NC3"]
+    },
+    "NB3": {
+      "neighbours": ["NA3", "NC4", "NC5"]
+    },
+    "NB4": {
+      "neighbours": ["NA4", "NC6", "NC7"]
+    },
+    "NB5": {
+      "neighbours": ["NA5", "NC8", "NC9"]
+    },
+    "NC1": {
+      "neighbours": ["NB1", "NC2", "N1C10"]
+    },
+    "NC2": {
+      "neighbours": ["NB2", "NC1", "N2C1"]
+    },
+    "NC3": {
+      "neighbours": ["NB2", "NC4", "N2C10"]
+    },
+    "NC4": {
+      "neighbours": ["NB3", "NC3", "N3C1"]
+    },
+    "NC5": {
+      "neighbours": ["NB3", "NC6", "N3C10"]
+    },
+    "NC6": {
+      "neighbours": ["NB4", "NC5", "N4C1"]
+    },
+    "NC7": {
+      "neighbours": ["NB4", "NC8", "N4C10"]
+    },
+    "NC8": {
+      "neighbours": ["NB5", "NC7", "N5C1"]
+    },
+    "NC9": {
+      "neighbours": ["NB5", "NC10", "N5C10"]
+    },
+    "NC10": {
+      "neighbours": ["NB1", "NC9", "N1C1"]
+    },
+    "N1A1": {
+      "neighbours": ["N1A2", "N1A5", "N1B1"]
+    },
+    "N1A2": {
+      "neighbours": ["N1A1", "N1A3", "N1B2"]
+    },
+    "N1A3": {
+      "neighbours": ["N1A2", "N1A4", "N1B3"]
+    },
+    "N1A4": {
+      "neighbours": ["N1A3", "N1A5", "N1B4"]
+    },
+    "N1A5": {
+      "neighbours": ["N1A1", "N1A4", "N1B5"]
+    },
+    "N1B1": {
+      "neighbours": ["N1A1", "N1C1", "N1C10"]
+    },
+    "N1B2": {
+      "neighbours": ["N1A2", "N1C2", "N1C3"]
+    },
+    "N1B3": {
+      "neighbours": ["N1A3", "N1C4", "N1C5"]
+    },
+    "N1B4": {
+      "neighbours": ["N1A4", "N1C6", "N1C7"]
+    },
+    "N1B5": {
+      "neighbours": ["N1A5", "N1C8", "N1C9"]
+    },
+    "N1C1": {
+      "neighbours": ["NC10", "N1B1", "N1C2"]
+    },
+    "N1C2": {
+      "neighbours": ["N1B2", "N1C1", "N5C9"]
+    },
+    "N1C3": {
+      "neighbours": ["N1B2", "N1C4", "N5C8"]
+    },
+    "N1C4": {
+      "neighbours": ["N1B3", "N1C3", "S1C5"]
+    },
+    "N1C5": {
+      "neighbours": ["N1B3", "N1C6", "S1C4"]
+    },
+    "N1C6": {
+      "neighbours": ["N1B4", "N1C5", "S2C7"]
+    },
+    "N1C7": {
+      "neighbours": ["N1B4", "N1C8", "S2C6"]
+    },
+    "N1C8": {
+      "neighbours": ["N1B5", "N1C7", "N2C3"]
+    },
+    "N1C9": {
+      "neighbours": ["N1B5", "N1C10", "N2C2"]
+    },
+    "N1C10": {
+      "neighbours": ["NC1", "N1B1", "N1C9"]
+    },
+    "N2A1": {
+      "neighbours": ["N2A2", "N2A5", "N2B1"]
+    },
+    "N2A2": {
+      "neighbours": ["N2A1", "N2A3", "N2B2"]
+    },
+    "N2A3": {
+      "neighbours": ["N2A2", "N2A4", "N2B3"]
+    },
+    "N2A4": {
+      "neighbours": ["N2A3", "N2A5", "N2B4"]
+    },
+    "N2A5": {
+      "neighbours": ["N2A1", "N2A4", "N2B5"]
+    },
+    "N2B1": {
+      "neighbours": ["N2A1", "N2C1", "N2C10"]
+    },
+    "N2B2": {
+      "neighbours": ["N2A2", "N2C2", "N2C3"]
+    },
+    "N2B3": {
+      "neighbours": ["N2A3", "N2C4", "N2C5"]
+    },
+    "N2B4": {
+      "neighbours": ["N2A4", "N2C6", "N2C7"]
+    },
+    "N2B5": {
+      "neighbours": ["N2A5", "N2C8", "N2C9"]
+    },
+    "N2C1": {
+      "neighbours": ["NC2", "N2B1", "N2C2"]
+    },
+    "N2C2": {
+      "neighbours": ["N1C9", "N2B2", "N2C1"]
+    },
+    "N2C3": {
+      "neighbours": ["N1C8", "N2B2", "N2C4"]
+    },
+    "N2C4": {
+      "neighbours": ["N2B3", "N2C3", "S2C5"]
+    },
+    "N2C5": {
+      "neighbours": ["N2B3", "N2C6", "S2C4"]
+    },
+    "N2C6": {
+      "neighbours": ["N2B4", "N2C5", "S3C7"]
+    },
+    "N2C7": {
+      "neighbours": ["N2B4", "N2C8", "S3C6"]
+    },
+    "N2C8": {
+      "neighbours": ["N2B5", "N2C7", "N3C3"]
+    },
+    "N2C9": {
+      "neighbours": ["N2B5", "N2C10", "N3C2"]
+    },
+    "N2C10": {
+      "neighbours": ["NC3", "N2B1", "N2C9"]
+    },
+    "N3A1": {
+      "neighbours": ["N3A2", "N3A5", "N3B1"]
+    },
+    "N3A2": {
+      "neighbours": ["N3A1", "N3A3", "N3B2"]
+    },
+    "N3A3": {
+      "neighbours": ["N3A2", "N3A4", "N3B3"]
+    },
+    "N3A4": {
+      "neighbours": ["N3A3", "N3A5", "N3B4"]
+    },
+    "N3A5": {
+      "neighbours": ["N3A1", "N3A4", "N3B5"]
+    },
+    "N3B1": {
+      "neighbours": ["N3A1", "N3C1", "N3C10"]
+    },
+    "N3B2": {
+      "neighbours": ["N3A2", "N3C2", "N3C3"]
+    },
+    "N3B3": {
+      "neighbours": ["N3A3", "N3C4", "N3C5"]
+    },
+    "N3B4": {
+      "neighbours": ["N3A4", "N3C6", "N3C7"]
+    },
+    "N3B5": {
+      "neighbours": ["N3A5", "N3C8", "N3C9"]
+    },
+    "N3C1": {
+      "neighbours": ["NC4", "N3B1", "N3C2"]
+    },
+    "N3C2": {
+      "neighbours": ["N2C9", "N3B2", "N3C1"]
+    },
+    "N3C3": {
+      "neighbours": ["N2C8", "N3B2", "N3C4"]
+    },
+    "N3C4": {
+      "neighbours": ["N3B3", "N3C3", "S3C5"]
+    },
+    "N3C5": {
+      "neighbours": ["N3B3", "N3C6", "S3C4"]
+    },
+    "N3C6": {
+      "neighbours": ["N3B4", "N3C5", "S4C7"]
+    },
+    "N3C7": {
+      "neighbours": ["N3B4", "N3C8", "S4C6"]
+    },
+    "N3C8": {
+      "neighbours": ["N3B5", "N3C7", "N4C3"]
+    },
+    "N3C9": {
+      "neighbours": ["N3B5", "N3C10", "N4C2"]
+    },
+    "N3C10": {
+      "neighbours": ["NC5", "N3B1", "N3C9"]
+    },
+    "N4A1": {
+      "neighbours": ["N4A2", "N4A5", "N4B1"]
+    },
+    "N4A2": {
+      "neighbours": ["N4A1", "N4A3", "N4B2"]
+    },
+    "N4A3": {
+      "neighbours": ["N4A2", "N4A4", "N4B3"]
+    },
+    "N4A4": {
+      "neighbours": ["N4A3", "N4A5", "N4B4"]
+    },
+    "N4A5": {
+      "neighbours": ["N4A1", "N4A4", "N4B5"]
+    },
+    "N4B1": {
+      "neighbours": ["N4A1", "N4C1", "N4C10"]
+    },
+    "N4B2": {
+      "neighbours": ["N4A2", "N4C2", "N4C3"]
+    },
+    "N4B3": {
+      "neighbours": ["N4A3", "N4C4", "N4C5"]
+    },
+    "N4B4": {
+      "neighbours": ["N4A4", "N4C6", "N4C7"]
+    },
+    "N4B5": {
+      "neighbours": ["N4A5", "N4C8", "N4C9"]
+    },
+    "N4C1": {
+      "neighbours": ["NC6", "N4B1", "N4C2"]
+    },
+    "N4C2": {
+      "neighbours": ["N3C9", "N4B2", "N4C1"]
+    },
+    "N4C3": {
+      "neighbours": ["N3C8", "N4B2", "N4C4"]
+    },
+    "N4C4": {
+      "neighbours": ["N4B3", "N4C3", "S4C5"]
+    },
+    "N4C5": {
+      "neighbours": ["N4B3", "N4C6", "S4C4"]
+    },
+    "N4C6": {
+      "neighbours": ["N4B4", "N4C5", "S5C7"]
+    },
+    "N4C7": {
+      "neighbours": ["N4B4", "N4C8", "S5C6"]
+    },
+    "N4C8": {
+      "neighbours": ["N4B5", "N4C7", "N5C3"]
+    },
+    "N4C9": {
+      "neighbours": ["N4B5", "N4C10", "N5C2"]
+    },
+    "N4C10": {
+      "neighbours": ["NC7", "N4B1", "N4C9"]
+    },
+    "N5A1": {
+      "neighbours": ["N5A2", "N5A5", "N5B1"]
+    },
+    "N5A2": {
+      "neighbours": ["N5A1", "N5A3", "N5B2"]
+    },
+    "N5A3": {
+      "neighbours": ["N5A2", "N5A4", "N5B3"]
+    },
+    "N5A4": {
+      "neighbours": ["N5A3", "N5A5", "N5B4"]
+    },
+    "N5A5": {
+      "neighbours": ["N5A1", "N5A4", "N5B5"]
+    },
+    "N5B1": {
+      "neighbours": ["N5A1", "N5C1", "N5C10"]
+    },
+    "N5B2": {
+      "neighbours": ["N5A2", "N5C2", "N5C3"]
+    },
+    "N5B3": {
+      "neighbours": ["N5A3", "N5C4", "N5C5"]
+    },
+    "N5B4": {
+      "neighbours": ["N5A4", "N5C6", "N5C7"]
+    },
+    "N5B5": {
+      "neighbours": ["N5A5", "N5C8", "N5C9"]
+    },
+    "N5C1": {
+      "neighbours": ["NC8", "N5B1", "N5C2"]
+    },
+    "N5C2": {
+      "neighbours": ["N4C9", "N5B2", "N5C1"]
+    },
+    "N5C3": {
+      "neighbours": ["N4C8", "N5B2", "N5C4"]
+    },
+    "N5C4": {
+      "neighbours": ["N5B3", "N5C3", "S5C5"]
+    },
+    "N5C5": {
+      "neighbours": ["N5B3", "N5C6", "S5C4"]
+    },
+    "N5C6": {
+      "neighbours": ["N5B4", "N5C5", "S1C7"]
+    },
+    "N5C7": {
+      "neighbours": ["N5B4", "N5C8", "S1C6"]
+    },
+    "N5C8": {
+      "neighbours": ["N1C3", "N5B5", "N5C7"]
+    },
+    "N5C9": {
+      "neighbours": ["N1C2", "N5B5", "N5C10"]
+    },
+    "N5C10": {
+      "neighbours": ["NC9", "N5B1", "N5C9"]
+    },
+    "S1A1": {
+      "neighbours": ["S1A2", "S1A5", "S1B1"]
+    },
+    "S1A2": {
+      "neighbours": ["S1A1", "S1A3", "S1B2"]
+    },
+    "S1A3": {
+      "neighbours": ["S1A2", "S1A4", "S1B3"]
+    },
+    "S1A4": {
+      "neighbours": ["S1A3", "S1A5", "S1B4"]
+    },
+    "S1A5": {
+      "neighbours": ["S1A1", "S1A4", "S1B5"]
+    },
+    "S1B1": {
+      "neighbours": ["S1A1", "S1C1", "S1C10"]
+    },
+    "S1B2": {
+      "neighbours": ["S1A2", "S1C2", "S1C3"]
+    },
+    "S1B3": {
+      "neighbours": ["S1A3", "S1C4", "S1C5"]
+    },
+    "S1B4": {
+      "neighbours": ["S1A4", "S1C6", "S1C7"]
+    },
+    "S1B5": {
+      "neighbours": ["S1A5", "S1C8", "S1C9"]
+    },
+    "S1C1": {
+      "neighbours": ["S1B1", "S1C2", "SC10"]
+    },
+    "S1C2": {
+      "neighbours": ["S1B2", "S1C1", "S2C9"]
+    },
+    "S1C3": {
+      "neighbours": ["S1B2", "S1C4", "S2C8"]
+    },
+    "S1C4": {
+      "neighbours": ["N1C5", "S1B3", "S1C3"]
+    },
+    "S1C5": {
+      "neighbours": ["N1C4", "S1B3", "S1C6"]
+    },
+    "S1C6": {
+      "neighbours": ["N5C7", "S1B4", "S1C5"]
+    },
+    "S1C7": {
+      "neighbours": ["N5C6", "S1B4", "S1C8"]
+    },
+    "S1C8": {
+      "neighbours": ["S1B5", "S1C7", "S5C3"]
+    },
+    "S1C9": {
+      "neighbours": ["S1B5", "S1C10", "S5C2"]
+    },
+    "S1C10": {
+      "neighbours": ["S1B1", "S1C9", "SC1"]
+    },
+    "S2A1": {
+      "neighbours": ["S2A2", "S2A5", "S2B1"]
+    },
+    "S2A2": {
+      "neighbours": ["S2A1", "S2A3", "S2B2"]
+    },
+    "S2A3": {
+      "neighbours": ["S2A2", "S2A4", "S2B3"]
+    },
+    "S2A4": {
+      "neighbours": ["S2A3", "S2A5", "S2B4"]
+    },
+    "S2A5": {
+      "neighbours": ["S2A1", "S2A4", "S2B5"]
+    },
+    "S2B1": {
+      "neighbours": ["S2A1", "S2C1", "S2C10"]
+    },
+    "S2B2": {
+      "neighbours": ["S2A2", "S2C2", "S2C3"]
+    },
+    "S2B3": {
+      "neighbours": ["S2A3", "S2C4", "S2C5"]
+    },
+    "S2B4": {
+      "neighbours": ["S2A4", "S2C6", "S2C7"]
+    },
+    "S2B5": {
+      "neighbours": ["S2A5", "S2C8", "S2C9"]
+    },
+    "S2C1": {
+      "neighbours": ["S2B1", "S2C2", "SC8"]
+    },
+    "S2C2": {
+      "neighbours": ["S2B2", "S2C1", "S3C9"]
+    },
+    "S2C3": {
+      "neighbours": ["S2B2", "S2C4", "S3C8"]
+    },
+    "S2C4": {
+      "neighbours": ["N2C5", "S2B3", "S2C3"]
+    },
+    "S2C5": {
+      "neighbours": ["N2C4", "S2B3", "S2C6"]
+    },
+    "S2C6": {
+      "neighbours": ["N1C7", "S2B4", "S2C5"]
+    },
+    "S2C7": {
+      "neighbours": ["N1C6", "S2B4", "S2C8"]
+    },
+    "S2C8": {
+      "neighbours": ["S1C3", "S2B5", "S2C7"]
+    },
+    "S2C9": {
+      "neighbours": ["S1C2", "S2B5", "S2C10"]
+    },
+    "S2C10": {
+      "neighbours": ["S2B1", "S2C9", "SC9"]
+    },
+    "S3A1": {
+      "neighbours": ["S3A2", "S3A5", "S3B1"]
+    },
+    "S3A2": {
+      "neighbours": ["S3A1", "S3A3", "S3B2"]
+    },
+    "S3A3": {
+      "neighbours": ["S3A2", "S3A4", "S3B3"]
+    },
+    "S3A4": {
+      "neighbours": ["S3A3", "S3A5", "S3B4"]
+    },
+    "S3A5": {
+      "neighbours": ["S3A1", "S3A4", "S3B5"]
+    },
+    "S3B1": {
+      "neighbours": ["S3A1", "S3C1", "S3C10"]
+    },
+    "S3B2": {
+      "neighbours": ["S3A2", "S3C2", "S3C3"]
+    },
+    "S3B3": {
+      "neighbours": ["S3A3", "S3C4", "S3C5"]
+    },
+    "S3B4": {
+      "neighbours": ["S3A4", "S3C6", "S3C7"]
+    },
+    "S3B5": {
+      "neighbours": ["S3A5", "S3C8", "S3C9"]
+    },
+    "S3C1": {
+      "neighbours": ["S3B1", "S3C2", "SC6"]
+    },
+    "S3C2": {
+      "neighbours": ["S3B2", "S3C1", "S4C9"]
+    },
+    "S3C3": {
+      "neighbours": ["S3B2", "S3C4", "S4C8"]
+    },
+    "S3C4": {
+      "neighbours": ["N3C5", "S3B3", "S3C3"]
+    },
+    "S3C5": {
+      "neighbours": ["N3C4", "S3B3", "S3C6"]
+    },
+    "S3C6": {
+      "neighbours": ["N2C7", "S3B4", "S3C5"]
+    },
+    "S3C7": {
+      "neighbours": ["N2C6", "S3B4", "S3C8"]
+    },
+    "S3C8": {
+      "neighbours": ["S2C3", "S3B5", "S3C7"]
+    },
+    "S3C9": {
+      "neighbours": ["S2C2", "S3B5", "S3C10"]
+    },
+    "S3C10": {
+      "neighbours": ["S3B1", "S3C9", "SC7"]
+    },
+    "S4A1": {
+      "neighbours": ["S4A2", "S4A5", "S4B1"]
+    },
+    "S4A2": {
+      "neighbours": ["S4A1", "S4A3", "S4B2"]
+    },
+    "S4A3": {
+      "neighbours": ["S4A2", "S4A4", "S4B3"]
+    },
+    "S4A4": {
+      "neighbours": ["S4A3", "S4A5", "S4B4"]
+    },
+    "S4A5": {
+      "neighbours": ["S4A1", "S4A4", "S4B5"]
+    },
+    "S4B1": {
+      "neighbours": ["S4A1", "S4C1", "S4C10"]
+    },
+    "S4B2": {
+      "neighbours": ["S4A2", "S4C2", "S4C3"]
+    },
+    "S4B3": {
+      "neighbours": ["S4A3", "S4C4", "S4C5"]
+    },
+    "S4B4": {
+      "neighbours": ["S4A4", "S4C6", "S4C7"]
+    },
+    "S4B5": {
+      "neighbours": ["S4A5", "S4C8", "S4C9"]
+    },
+    "S4C1": {
+      "neighbours": ["S4B1", "S4C2", "SC4"]
+    },
+    "S4C2": {
+      "neighbours": ["S4B2", "S4C1", "S5C9"]
+    },
+    "S4C3": {
+      "neighbours": ["S4B2", "S4C4", "S5C8"]
+    },
+    "S4C4": {
+      "neighbours": ["N4C5", "S4B3", "S4C3"]
+    },
+    "S4C5": {
+      "neighbours": ["N4C4", "S4B3", "S4C6"]
+    },
+    "S4C6": {
+      "neighbours": ["N3C7", "S4B4", "S4C5"]
+    },
+    "S4C7": {
+      "neighbours": ["N3C6", "S4B4", "S4C8"]
+    },
+    "S4C8": {
+      "neighbours": ["S3C3", "S4B5", "S4C7"]
+    },
+    "S4C9": {
+      "neighbours": ["S3C2", "S4B5", "S4C10"]
+    },
+    "S4C10": {
+      "neighbours": ["S4B1", "S4C9", "SC5"]
+    },
+    "S5A1": {
+      "neighbours": ["S5A2", "S5A5", "S5B1"]
+    },
+    "S5A2": {
+      "neighbours": ["S5A1", "S5A3", "S5B2"]
+    },
+    "S5A3": {
+      "neighbours": ["S5A2", "S5A4", "S5B3"]
+    },
+    "S5A4": {
+      "neighbours": ["S5A3", "S5A5", "S5B4"]
+    },
+    "S5A5": {
+      "neighbours": ["S5A1", "S5A4", "S5B5"]
+    },
+    "S5B1": {
+      "neighbours": ["S5A1", "S5C1", "S5C10"]
+    },
+    "S5B2": {
+      "neighbours": ["S5A2", "S5C2", "S5C3"]
+    },
+    "S5B3": {
+      "neighbours": ["S5A3", "S5C4", "S5C5"]
+    },
+    "S5B4": {
+      "neighbours": ["S5A4", "S5C6", "S5C7"]
+    },
+    "S5B5": {
+      "neighbours": ["S5A5", "S5C8", "S5C9"]
+    },
+    "S5C1": {
+      "neighbours": ["S5B1", "S5C2", "SC2"]
+    },
+    "S5C2": {
+      "neighbours": ["S1C9", "S5B2", "S5C1"]
+    },
+    "S5C3": {
+      "neighbours": ["S1C8", "S5B2", "S5C4"]
+    },
+    "S5C4": {
+      "neighbours": ["N5C5", "S5B3", "S5C3"]
+    },
+    "S5C5": {
+      "neighbours": ["N5C4", "S5B3", "S5C6"]
+    },
+    "S5C6": {
+      "neighbours": ["N4C7", "S5B4", "S5C5"]
+    },
+    "S5C7": {
+      "neighbours": ["N4C6", "S5B4", "S5C8"]
+    },
+    "S5C8": {
+      "neighbours": ["S4C3", "S5B5", "S5C7"]
+    },
+    "S5C9": {
+      "neighbours": ["S4C2", "S5B5", "S5C10"]
+    },
+    "S5C10": {
+      "neighbours": ["S5B1", "S5C9", "SC3"]
+    },
+    "SA1": {
+      "neighbours": ["SA2", "SA5", "SB1"]
+    },
+    "SA2": {
+      "neighbours": ["SA1", "SA3", "SB2"]
+    },
+    "SA3": {
+      "neighbours": ["SA2", "SA4", "SB3"]
+    },
+    "SA4": {
+      "neighbours": ["SA3", "SA5", "SB4"]
+    },
+    "SA5": {
+      "neighbours": ["SA1", "SA4", "SB5"]
+    },
+    "SB1": {
+      "neighbours": ["SA1", "SC1", "SC10"]
+    },
+    "SB2": {
+      "neighbours": ["SA2", "SC2", "SC3"]
+    },
+    "SB3": {
+      "neighbours": ["SA3", "SC4", "SC5"]
+    },
+    "SB4": {
+      "neighbours": ["SA4", "SC6", "SC7"]
+    },
+    "SB5": {
+      "neighbours": ["SA5", "SC8", "SC9"]
+    },
+    "SC1": {
+      "neighbours": ["S1C10", "SB1", "SC2"]
+    },
+    "SC2": {
+      "neighbours": ["S5C1", "SB2", "SC1"]
+    },
+    "SC3": {
+      "neighbours": ["S5C10", "SB2", "SC4"]
+    },
+    "SC4": {
+      "neighbours": ["S4C1", "SB3", "SC3"]
+    },
+    "SC5": {
+      "neighbours": ["S4C10", "SB3", "SC6"]
+    },
+    "SC6": {
+      "neighbours": ["S3C1", "SB4", "SC5"]
+    },
+    "SC7": {
+      "neighbours": ["S3C10", "SB4", "SC8"]
+    },
+    "SC8": {
+      "neighbours": ["S2C1", "SB5", "SC7"]
+    },
+    "SC9": {
+      "neighbours": ["S2C10", "SB5", "SC10"]
+    },
+    "SC10": {
+      "neighbours": ["S1C1", "SB1", "SC9"]
+    }
+  }
+}
