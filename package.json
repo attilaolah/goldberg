@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "node src/server.js"
+    "serve": "bun --watch src/server.js"
   }
 }
