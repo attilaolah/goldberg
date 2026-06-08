@@ -12,7 +12,8 @@ from goldberg_optimisation.topology import PROJECT_ROOT, Topology, load_topology
 
 OPTIMISED_VERTICES_PATH = PROJECT_ROOT / "data" / "gp_2_2_optimised_vertices.json"
 OPTIMISATION_REPORT_PATH = PROJECT_ROOT / "data" / "gp_2_2_optimisation_report.json"
-TARGET_TOLERANCE = 1e-10
+TARGET_TOLERANCE = 1e-12
+TARGET_METRICS = ("on_sphere", "equilateral", "planar")
 
 
 @dataclass(frozen=True)
@@ -60,6 +61,7 @@ def optimise(topology: Topology) -> dict[str, object]:
     face_planes = calculate_face_planes(positions, face_indices)
     variables = pack_variables(positions, edge_length, face_planes)
     stage_reports: list[dict[str, object]] = []
+    candidates: list[dict[str, object]] = []
 
     for stage in STAGES:
         result = least_squares(
@@ -86,6 +88,7 @@ def optimise(topology: Topology) -> dict[str, object]:
         face_planes = calculate_face_planes(positions, face_indices)
         variables = pack_variables(positions, edge_length, face_planes)
         metrics = calculate_metrics(positions, edge_indices, face_indices)
+        satisfied_target_count = count_satisfied_targets(asdict(metrics))
         stage_reports.append(
             {
                 "stage": stage.name,
@@ -94,20 +97,27 @@ def optimise(topology: Topology) -> dict[str, object]:
                 "cost": float(result.cost),
                 "optimality": float(result.optimality),
                 "evaluations": int(result.nfev),
+                "satisfied_target_count": satisfied_target_count,
                 "metrics": asdict(metrics),
             }
         )
+        candidates.append(
+            {
+                "stage": stage.name,
+                "positions": positions.copy(),
+                "edge_length": edge_length,
+                "metrics": asdict(metrics),
+                "satisfied_target_count": satisfied_target_count,
+            }
+        )
 
-    positions, edge_length, _ = unpack_variables(
-        variables,
-        len(topology.labels),
-        len(face_indices),
-    )
-    metrics = calculate_metrics(positions, edge_indices, face_indices)
+    selected = select_best_candidate(candidates)
     return {
-        "positions": positions,
-        "edge_length": edge_length,
-        "metrics": asdict(metrics),
+        "positions": selected["positions"],
+        "edge_length": selected["edge_length"],
+        "metrics": selected["metrics"],
+        "selected_stage": selected["stage"],
+        "satisfied_target_count": selected["satisfied_target_count"],
         "stages": stage_reports,
         "face_count": len(topology.faces),
         "edge_count": len(topology.edges),
@@ -193,6 +203,20 @@ def normalise_positions(positions: np.ndarray) -> np.ndarray:
     return positions / np.linalg.norm(positions, axis=1)[:, np.newaxis]
 
 
+def count_satisfied_targets(metrics: dict[str, float]) -> int:
+    return sum(metrics[metric] <= TARGET_TOLERANCE for metric in TARGET_METRICS)
+
+
+def select_best_candidate(candidates: list[dict[str, object]]) -> dict[str, object]:
+    return max(
+        candidates,
+        key=lambda candidate: (
+            candidate["satisfied_target_count"],
+            -sum(float(candidate["metrics"][metric]) for metric in TARGET_METRICS),
+        ),
+    )
+
+
 def write_outputs(topology: Topology, result: dict[str, object]) -> None:
     positions = result["positions"]
     if not isinstance(positions, np.ndarray):
@@ -212,10 +236,13 @@ def write_outputs(topology: Topology, result: dict[str, object]) -> None:
         "edge_count": result["edge_count"],
         "face_count": result["face_count"],
         "edge_length": result["edge_length"],
+        "selected_stage": result["selected_stage"],
         "target_tolerance": TARGET_TOLERANCE,
+        "satisfied_target_count": result["satisfied_target_count"],
+        "satisfies_two_target_goal": result["satisfied_target_count"] >= 2,
         "satisfies_target": all(
             result["metrics"][metric] <= TARGET_TOLERANCE
-            for metric in ("on_sphere", "equilateral", "planar")
+            for metric in TARGET_METRICS
         ),
         "metrics": result["metrics"],
         "stages": result["stages"],

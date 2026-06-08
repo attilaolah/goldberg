@@ -29,14 +29,16 @@ The optimiser writes:
 - `data/gp_2_2_optimised_vertices.json`
 - `data/gp_2_2_optimisation_report.json`
 
-The report includes `satisfies_target`, which is only `true` when the three
-headline metrics are all below the configured target tolerance. A `false` value
-means the run produced a useful numerical attempt, but not yet a high-accuracy
-solution of the three constraints.
+The report includes:
 
-The current generated report has `satisfies_target: false`. Its headline
-metrics are approximately:
+- `satisfies_two_target_goal`, which is `true` when at least two headline
+  metrics are below the configured target tolerance.
+- `satisfies_target`, which is only `true` when all three headline metrics are
+  below the configured target tolerance.
+
+The current generated report has `satisfies_two_target_goal: true` and
+`satisfies_target: false`. Its headline metrics are approximately:
 
 - on-sphere: `2.22e-16`
-- equilateral: `1.53e-3`
-- planar: `3.01e-3`
+- equilateral: `4.60e-13`
+- planar: `3.26e-3`
