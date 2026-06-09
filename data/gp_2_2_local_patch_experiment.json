@@ -1,0 +1,120 @@
+{
+  "name": "Goldberg GP(2,2) local patch experiment",
+  "edge_target": 0.20174395333543618,
+  "exact_tolerance": 1e-12,
+  "non_degenerate_rule": "All selected face edges are fitted to the global priority edge length to avoid collapsed zero-edge patches.",
+  "results": [
+    {
+      "name": "pentagon",
+      "description": "The central N pentagon only.",
+      "exact": true,
+      "face_count": 1,
+      "vertex_count": 5,
+      "edge_count": 5,
+      "faces": [["NA1", "NA2", "NA3", "NA4", "NA5"]],
+      "metrics": {
+        "on_sphere": 2.6645352591003757e-15,
+        "equilateral": 1.942890293094024e-16,
+        "planar": 2.0048734056208185e-15,
+        "shortest_edge": 0.20174395333543607,
+        "longest_edge": 0.20174395333543627
+      },
+      "edge_target_error": 1.1102230246251565e-16,
+      "worst_error": 2.6645352591003757e-15
+    },
+    {
+      "name": "pentagon_plus_one_hexagon",
+      "description": "The central N pentagon plus one neighbouring hexagon.",
+      "exact": true,
+      "face_count": 2,
+      "vertex_count": 9,
+      "edge_count": 10,
+      "faces": [
+        ["NA1", "NA2", "NA3", "NA4", "NA5"],
+        ["NA1", "NA2", "NB2", "NC2", "NC1", "NB1"]
+      ],
+      "metrics": {
+        "on_sphere": 1.2467804566540508e-13,
+        "equilateral": 1.4210854715202004e-14,
+        "planar": 5.1653789193845256e-14,
+        "shortest_edge": 0.20174395333542905,
+        "longest_edge": 0.20174395333544326
+      },
+      "edge_target_error": 7.13318293321663e-15,
+      "worst_error": 1.2467804566540508e-13
+    },
+    {
+      "name": "pentagon_plus_two_adjacent_hexagons",
+      "description": "The central N pentagon plus two neighbouring hexagons that meet at NA1.",
+      "exact": false,
+      "face_count": 3,
+      "vertex_count": 12,
+      "edge_count": 14,
+      "faces": [
+        ["NA1", "NA2", "NA3", "NA4", "NA5"],
+        ["NA1", "NA2", "NB2", "NC2", "NC1", "NB1"],
+        ["NA1", "NA5", "NB5", "NC9", "NC10", "NB1"]
+      ],
+      "metrics": {
+        "on_sphere": 0.0006460842482151063,
+        "equilateral": 3.9434173462110644e-5,
+        "planar": 0.00015189284543314107,
+        "shortest_edge": 0.20171426743245163,
+        "longest_edge": 0.20175370160591374
+      },
+      "edge_target_error": 2.968590298454976e-5,
+      "worst_error": 0.0006460842482151063
+    },
+    {
+      "name": "pentagon_plus_full_hexagon_ring",
+      "description": "The central N pentagon plus all five neighbouring hexagons.",
+      "exact": false,
+      "face_count": 6,
+      "vertex_count": 20,
+      "edge_count": 25,
+      "faces": [
+        ["NA1", "NA2", "NA3", "NA4", "NA5"],
+        ["NA1", "NA2", "NB2", "NC2", "NC1", "NB1"],
+        ["NA1", "NA5", "NB5", "NC9", "NC10", "NB1"],
+        ["NA2", "NA3", "NB3", "NC4", "NC3", "NB2"],
+        ["NA3", "NA4", "NB4", "NC6", "NC5", "NB3"],
+        ["NA4", "NA5", "NB5", "NC8", "NC7", "NB4"]
+      ],
+      "metrics": {
+        "on_sphere": 0.002025701610750108,
+        "equilateral": 0.00033266539064066847,
+        "planar": 0.0007349351590612624,
+        "shortest_edge": 0.20152583862043924,
+        "longest_edge": 0.2018585040110799
+      },
+      "edge_target_error": 0.00021811471499694202,
+      "worst_error": 0.002025701610750108
+    },
+    {
+      "name": "full_ring_plus_best_outer_face",
+      "description": "The full ring plus the best single additional adjacent face from the ten outer candidates.",
+      "exact": false,
+      "face_count": 7,
+      "vertex_count": 24,
+      "edge_count": 30,
+      "faces": [
+        ["NA1", "NA2", "NA3", "NA4", "NA5"],
+        ["NA1", "NA2", "NB2", "NC2", "NC1", "NB1"],
+        ["NA1", "NA5", "NB5", "NC9", "NC10", "NB1"],
+        ["NA2", "NA3", "NB3", "NC4", "NC3", "NB2"],
+        ["NA3", "NA4", "NB4", "NC6", "NC5", "NB3"],
+        ["NA4", "NA5", "NB5", "NC8", "NC7", "NB4"],
+        ["N1C10", "N1C9", "N2C2", "N2C1", "NC2", "NC1"]
+      ],
+      "metrics": {
+        "on_sphere": 0.002025701610719688,
+        "equilateral": 0.0003326653906187971,
+        "planar": 0.0007349351590669623,
+        "shortest_edge": 0.2015258386204558,
+        "longest_edge": 0.2018585040110746
+      },
+      "edge_target_error": 0.00021811471498037194,
+      "worst_error": 0.002025701610719688
+    }
+  ]
+}

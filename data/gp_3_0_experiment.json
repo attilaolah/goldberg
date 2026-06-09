@@ -1,0 +1,56 @@
+{
+  "name": "Goldberg GP(3,0) experiment",
+  "source": "Python translation of the supplementary GP30.m constraints.",
+  "target_tolerance": 1e-12,
+  "initial_variables": [0.8660254037844386, 1.0, 2.0, 1.0, 1.0, 1.0],
+  "results": [
+    {
+      "name": "strict_unit_sphere",
+      "description": "Planarity, single edge length, and all three independent shell radii fixed to 1.",
+      "exact": false,
+      "variables": [
+        0.8614420690456308, 0.877823315282285, 1.912012796477778, 1.0004838052718197, 0.9999540311037436,
+        0.999548590068457
+      ],
+      "solver": {
+        "success": true,
+        "status": 3,
+        "cost": 6.786778048076093e-6,
+        "optimality": 4.3872054020276455e-11,
+        "evaluations": 14
+      },
+      "metrics": {
+        "on_sphere": 0.0004838052718196817,
+        "equilateral": 0.0006075490852364973,
+        "planar": 0.0026518342849532416,
+        "shortest_edge": 0.23259143898981607,
+        "longest_edge": 0.23319898807505257
+      },
+      "worst_error": 0.0026518342849532416
+    },
+    {
+      "name": "paper_commented_pnas_case",
+      "description": "Planarity, single edge length, and only R0(1) fixed to 1, matching the commented PNAS-case line in GP30.m.",
+      "exact": false,
+      "variables": [
+        0.8655777954415028, 0.8536600049256811, 1.8911707988367528, 1.0000000014707806, 0.9917373813999413,
+        0.9710579538133065
+      ],
+      "solver": {
+        "success": true,
+        "status": 3,
+        "cost": 3.0546555375478107e-15,
+        "optimality": 5.190541137232652e-10,
+        "evaluations": 31
+      },
+      "metrics": {
+        "on_sphere": 0.028942046186693604,
+        "equilateral": 6.648631506456226e-9,
+        "planar": 6.028360195887214e-8,
+        "shortest_edge": 0.2307703094310433,
+        "longest_edge": 0.2307703160796748
+      },
+      "worst_error": 0.028942046186693604
+    }
+  ]
+}
